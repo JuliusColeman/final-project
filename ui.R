@@ -21,7 +21,6 @@ ui <- fluidPage(
       
       sliderInput(inputId = "year", label = strong("Year"), min = 2008, max = 2017,
                   value = 2017)
-      )
     ),
     
     mainPanel(
@@ -30,6 +29,7 @@ ui <- fluidPage(
         tabPanel("Crime Types", verbatimTextOutput("crimetypes")),
         tabPanel("Time", plotOutput("time")),
         tabPanel("Map", imageOutput("map"))
+      )  
     )
   )
 )
