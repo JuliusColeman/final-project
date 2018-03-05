@@ -12,7 +12,6 @@ map = leaflet(data) %>%
     lng = ~Longitude, lat = ~Latitude,
     popup = ~htmlEscape(Summarized.Offense.Description),
     clusterOptions = markerClusterOptions()
-    
   )
 
 print(map)
