@@ -14,29 +14,33 @@ crime_types <- c("animal", "assault", "burglary", "counterfeit", "dispute", "dis
 shinyUI(
   navbarPage(title = "Seattle Crime Rate",
     tabsetPanel(
-      tabPanel("Home", verbatimTextOutput("home")),
+      tabPanel("Home", verbatimTextOutput("home"),
+      mainPanel(verbatimTextOutput("home"))
+      )
+    ),  
     
-      tabPanel("Crime Types", verbatimTextOutput("crimetypes")),
+      tabPanel("Crime Types", verbatimTextOutput("crimetypes"),
         sidebarLayout(
           sidebarPanel(
-            selectInput(inputId = "type", label = strong("Types of Crime")),
-                        choices = crime_types,
-                        selected = "animal")),
-
-      tabPanel("Time", plotOutput("time")),
+            selectInput(inputId = "type", label = strong("Types of Crime"),
+                        choices = police_report$Offense.Type,
+                        selected = "animal")))
+          ),
+          mainPanel(verbatimTextOutput("crimetypes")
+        )
+      ),
+  
+      tabPanel("Time", plotOutput("time"),
         sidebarLayout(
           sidebarPanel(
             sliderInput(inputId = "year", label = strong("Year"), min = 2008, max = 2017,
-                        value = 2017))),
-          
-      tabPanel("Map", imageOutput("map")),
-    
-      mainPanel(
-        verbatimTextOutput("home"),
-        verbatimTextOutput("crimetypes"),
-        plotOutput("time"),
-        imageOutput("map")
-      )
-    )
+                        value = 2017))
+          ),
+          mainPanel(plotOutput("time")
+        )            
+      ),
+
+      tabPanel("Map", imageOutput("map"),
+        mainPanel(imageOutput("map"))
   )
 )
