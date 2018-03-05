@@ -11,25 +11,32 @@ crime_types <- c("animal", "assault", "burglary", "counterfeit", "dispute", "dis
                  "violation of court order", "warrant", "weapon")
 
 # Define UI
-ui <- fluidPage(
-  titlePanel("Seattle Crime Rate"),
-  sidebarLayout(
-    sidebarPanel(
-      selectInput(inputId = "type", label = strong("Types of Crime"),
-                  choices = crime_types,
-                  selected = "animal"),
-      
-      sliderInput(inputId = "year", label = strong("Year"), min = 2008, max = 2017,
-                  value = 2017)
-    ),
+shinyUI(
+  navbarPage(title = "Seattle Crime Rate",
+    tabsetPanel(
+      tabPanel("Home", verbatimTextOutput("home")),
     
-    mainPanel(
-      tabsetPanel(
-        tabPanel("Home", verbatimTextOutput("home")),
-        tabPanel("Crime Types", verbatimTextOutput("crimetypes")),
-        tabPanel("Time", plotOutput("time")),
-        tabPanel("Map", imageOutput("map"))
-      )  
+      tabPanel("Crime Types", verbatimTextOutput("crimetypes")),
+        sidebarLayout(
+          sidebarPanel(
+            selectInput(inputId = "type", label = strong("Types of Crime")),
+                        choices = crime_types,
+                        selected = "animal")),
+
+      tabPanel("Time", plotOutput("time")),
+        sidebarLayout(
+          sidebarPanel(
+            sliderInput(inputId = "year", label = strong("Year"), min = 2008, max = 2017,
+                        value = 2017))),
+          
+      tabPanel("Map", imageOutput("map")),
+    
+      mainPanel(
+        verbatimTextOutput("home"),
+        verbatimTextOutput("crimetypes"),
+        plotOutput("time"),
+        imageOutput("map")
+      )
     )
   )
 )
