@@ -11,8 +11,7 @@ crime_types <- c("animal", "assault", "burglary", "counterfeit", "dispute", "dis
                  "violation of court order", "warrant", "weapon")
 
 # Define UI
-shinyUI(
-  navbarPage(title = "Seattle Crime Rate",
+ui <- (navbarPage(title = "Seattle Crime Rate",
     tabsetPanel(
       tabPanel("Home", verbatimTextOutput("home"),
       mainPanel(verbatimTextOutput("home"))
