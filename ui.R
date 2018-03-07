@@ -12,10 +12,8 @@ crime_types <- c("animal", "assault", "burglary", "counterfeit", "dispute", "dis
 
 # Define UI
 ui <- (navbarPage(title = "Seattle Crime Rate",
-    tabsetPanel(
-      tabPanel("Home", verbatimTextOutput("home"),
-      mainPanel(verbatimTextOutput("home"))
-      )
+      tabPanel("Home", uiOutput("home"),
+      mainPanel(uiOutput("home"))
     ),  
     
       tabPanel("Crime Types", verbatimTextOutput("crimetypes"),
@@ -23,9 +21,9 @@ ui <- (navbarPage(title = "Seattle Crime Rate",
           sidebarPanel(
             selectInput(inputId = "type", label = strong("Types of Crime"),
                         choices = police_report$Offense.Type,
-                        selected = "animal")))
+                        selected = "animal")
           ),
-          mainPanel(verbatimTextOutput("crimetypes")
+          mainPanel(verbatimTextOutput("crimetypes"))
         )
       ),
   
@@ -33,13 +31,14 @@ ui <- (navbarPage(title = "Seattle Crime Rate",
         sidebarLayout(
           sidebarPanel(
             sliderInput(inputId = "year", label = strong("Year"), min = 2008, max = 2017,
-                        value = 2017))
+                        value = 2017)
           ),
-          mainPanel(plotOutput("time")
+          mainPanel(plotOutput("time"))
         )            
       ),
 
       tabPanel("Map", imageOutput("map"),
         mainPanel(imageOutput("map"))
+      )
   )
 )
