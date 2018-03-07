@@ -1,3 +1,5 @@
+# install.packages("data.table")
+# install.packages("leaflet")
 library("shiny")
 library("dplyr")
 library("data.table")
@@ -29,7 +31,11 @@ shinyUI(navbarPage(title = "Seattle Crime Rate",
         )
       ),
   
-      tabPanel("Time",
+      tabPanel("Rate",
+        # Title of the page
+        h1("Graph of Seattle Crime Rate", align = "center"),
+        h6("This interactive graph show the rate of crime in Seattle from 2008 and 2017. You can use 
+           the sliders to adjust the range of years that is shown in the graph."),
         sidebarLayout(
           sidebarPanel(
             sliderInput(inputId = "year", label = strong("Year"), min = 2008, max = 2017,

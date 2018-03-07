@@ -1,10 +1,12 @@
+# install.packages("data.table")
+# install.packages("leaflet")
+# install.packages("htmltools")
 library("shiny")
 library("dplyr")
 library("ggplot2")
 library("data.table")
 library("leaflet")
 library("htmltools")
-
 # Load data
 police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
 
