@@ -4,10 +4,10 @@ library("ggplot2")
 library("data.table")
 
 # Load data
-police_report <- read.csv("Seattle_Police_Department_Police_Report_Incident.csv.bz2")
+police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
 
 # Define server
-server <- function(input, output) {
+shinyServer(function(input, output) {
   url <- a("Seattle Police Department Police Report Incident", href='https://data.seattle.gov/Public-Safety/Seattle-Police-Department-Police-Report-Incident/7ais-f98f')
   output$home <- renderUI({
     tagList("We will be using the", url, "dataset to 
@@ -16,21 +16,28 @@ server <- function(input, output) {
     highest crime rate.")
   })
                              
-  #output$crimetypes <- renderPrint({expr, env, quoted, func, width})
+  output$crimetypes <- renderPlot({
+    
+  })
                                   
   output$time <- renderPlot({
     years <- select(data, Year)
     years <- table(years)
     years <- as.data.frame(years)
+    years$years <- as.numeric(as.character(years$years))
+    years$Freq <- as.numeric(as.character(years$Freq))
     years <- filter(years, Freq > 27000)
     
-    ggplot(years, aes(x=years, y=Freq, group = 1)) +
-      geom_line()
     
+    ggplot(years, aes(x=years, y=Freq, group = 1)) +
+      stat_smooth(geom = 'area', method = 'loess', fill = "steelblue") +
+      scale_x_continuous(breaks = years$years, name="Year", limits=c(input$year[1], input$year[2])) +
+      ylab("Count") + labs(title="Seattle Crime Rate")
+  
   })
   
-  #output$map <- renderImage({expr, env, quoted, deleteFile})
+  output$map <- renderImage({
+    
+  })
 
-}
-
-shinyServer(server)
+})
