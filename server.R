@@ -7,6 +7,7 @@ library("ggplot2")
 library("data.table")
 library("leaflet")
 library("htmltools")
+
 # Load data
 police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
 
@@ -31,6 +32,7 @@ shinyServer(function(input, output, session) {
     filter(Offense.Type %in% target)
                              
   output$crimetypes <- renderPlot({
+    
     ## filters the year
     year.graph <- newdata[newdata$Year == input$select,]
     
