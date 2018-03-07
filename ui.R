@@ -4,9 +4,11 @@ library("shiny")
 library("dplyr")
 library("data.table")
 library("leaflet")
+library(readr)
 
 # Load data
-police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
+#police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
+police_report <- read_csv("Seattle_Police_Department_Police_Report_Incident.csv.zip")
 
 crime_types <- c("animal", "assault", "burglary", "counterfeit", "dispute", "disturbance", "dui", 
                  "embezzle", "false report", "forgery check", "fraud", "harassment", "homicide",
@@ -23,9 +25,9 @@ shinyUI(navbarPage(title = "Seattle Crime Rate",
       p("We created this project tailored for residents of Seattle, Washington or those who are planning to move here."),
       uiOutput("home"),
       h2("About Us"),
-      p("Our team consists of four members: Julius Coleman, Lin Lin, Jordan Lucas, and Ryan Dang"),
+      p("Our team consists of four members: Julius Coleman, Lin Lin, Jordan Lucas, and Ryan Dang."),
       p("To view our code for this project, feel free to check out our",
-        a("GibHub.", 
+        a("GibHub Repository.",
           href = "https://github.com/JuliusColeman/final-project"))
     )
   ),  

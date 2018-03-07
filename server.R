@@ -7,9 +7,11 @@ library("ggplot2")
 library("data.table")
 library("leaflet")
 library("htmltools")
+library(readr)
 
 # Load data
-police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
+#police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
+police_report <- read_csv("Seattle_Police_Department_Police_Report_Incident.csv.zip")
 
 # Define server
 shinyServer(function(input, output, session) {
@@ -18,7 +20,7 @@ shinyServer(function(input, output, session) {
     tagList("We will be using the", url, "dataset to 
     help our audience learn if there has been an increase or decrease in crime overtime, 
     what are the most common types of crime, and which areas/locations in Seattle has the 
-    highest crime rate.")
+    highest crime rate. ")
   })
   
   ## Crime Filter Data Set 
