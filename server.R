@@ -2,12 +2,14 @@ library("shiny")
 library("dplyr")
 library("ggplot2")
 library("data.table")
+library("leaflet")
+library("htmltools")
 
 # Load data
 police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
 
 # Define server
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   url <- a("Seattle Police Department Police Report Incident", href='https://data.seattle.gov/Public-Safety/Seattle-Police-Department-Police-Report-Incident/7ais-f98f')
   output$home <- renderUI({
     tagList("We will be using the", url, "dataset to 
@@ -21,7 +23,7 @@ shinyServer(function(input, output) {
   })
                                   
   output$time <- renderPlot({
-    years <- select(data, Year)
+    years <- select(police_report, Year)
     years <- table(years)
     years <- as.data.frame(years)
     years$years <- as.numeric(as.character(years$years))
@@ -36,8 +38,21 @@ shinyServer(function(input, output) {
   
   })
   
-  output$map <- renderImage({
+  output$map <- renderLeaflet({
     
+    # Filtering out years beside 2017 
+    data <- filter(police_report, Year == 2017)
+    
+    # Creating the map
+    map <- leaflet(data) %>% 
+      addTiles() %>% 
+      addMarkers(
+        lng = ~Longitude, lat = ~Latitude,
+        popup = ~htmlEscape(Summarized.Offense.Description),
+        clusterOptions = markerClusterOptions()
+      )
+    
+    # Displaying the map
+    map
   })
-
 })

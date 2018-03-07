@@ -1,6 +1,7 @@
 library("shiny")
 library("dplyr")
 library("data.table")
+library("leaflet")
 
 # Load data
 police_report <- fread("bzcat Seattle_Police_Department_Police_Report_Incident.csv.bz2")
@@ -39,7 +40,18 @@ shinyUI(navbarPage(title = "Seattle Crime Rate",
       ),
 
       tabPanel("Map",
-        mainPanel(plotOutput("map"))
+        # Title of the page
+        h1("Map of Crime in Seattle (2017)", align = "center"),
+        h6("This interactive map shows the locations of crime within the City of Seattle during 2017. 
+           You can zoom in to view the clusters and individual markers. To find out information about
+           the type of crime that was committed, you can click on the marker to display a popup."),
+               
+        # Making the map fill the whole page
+        tags$style(type = "text/css", "#map {height: calc(100vh - 80px) !important;}"),
+               
+        # Outputting the map
+        leafletOutput(outputId = "map")
+               
       )
   )
 )
